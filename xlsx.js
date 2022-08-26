@@ -9190,6 +9190,8 @@ return function parse_sty_xml(data, themes, opts) {
 };
 })();
 
+var style_builder;
+
 var STYLES_XML_ROOT = writextag('styleSheet', null, {
 	'xmlns': XMLNS.main[0],
 	'xmlns:vt': XMLNS.vt
@@ -20827,7 +20829,7 @@ function write_cfb_ctr(cfb, o) {
 
 function write_zip_type(wb, opts) {
 	var o = opts||{};
-	style_builder  = new StyleBuilder(opts);
+	style_builder = new StyleBuilder(opts);
 	var z = write_zip(wb, o);
 	var oopts = {};
 	if(o.compression) oopts.compression = 'DEFLATE';
@@ -21521,7 +21523,7 @@ var XmlNode = (function () {
     return this;
   }
 
-  var APOS = "'"; QUOTE = '"'
+  var APOS = "'", QUOTE = '"'
   var ESCAPED_QUOTE = {  }
   ESCAPED_QUOTE[QUOTE] = '&quot;'
   ESCAPED_QUOTE[APOS] = '&apos;'
@@ -21598,10 +21600,9 @@ var StyleBuilder = function (options) {
 		fmt_table[table_fmt[idx]] = idx;
 	}
 
-
 	// cache style specs to avoid excessive duplication
-	_hashIndex = {};
-	_listIndex = [];
+	var _hashIndex = {};
+	var _listIndex = [];
 
 	return {
 
